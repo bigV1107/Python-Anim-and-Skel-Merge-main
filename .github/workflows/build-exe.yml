@@ -25,7 +25,7 @@ jobs:
 
       - name: Build single unified EXE
         run: |
-          pyinstaller --onefile --name "WoWSkelMerge" wow_skel_merge.py
+          pyinstaller --onefile --windowed --name "WoWSkelMerge" wow_skel_merge.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
