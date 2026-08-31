@@ -71,9 +71,18 @@ except ImportError:
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
-_missing = [f for f in ("merge_skel.py", "merge_anim_into_skel.py", "merge_skel_into_m2.py", "merge_anim_into_m2.py",
-                         "bulk_bake_anim_into_m2.py")
-            if not os.path.isfile(os.path.join(HERE, f))]
+if getattr(sys, 'frozen', False):
+    _missing = []
+    for mod in ("merge_skel", "merge_anim_into_skel", "merge_skel_into_m2", "merge_anim_into_m2", "bulk_bake_anim_into_m2"):
+        try:
+            __import__(mod)
+        except ImportError:
+            _missing.append(mod + ".py")
+else:
+    _missing = [f for f in ("merge_skel.py", "merge_anim_into_skel.py", "merge_skel_into_m2.py", "merge_anim_into_m2.py",
+                             "bulk_bake_anim_into_m2.py")
+                if not os.path.isfile(os.path.join(HERE, f))]
+
 if _missing:
     _pause_and_exit(
         "ERRORE / ERROR: questi file devono stare nella STESSA cartella di merge_skel_gui.py "
